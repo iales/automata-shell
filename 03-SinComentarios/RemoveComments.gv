@@ -1,0 +1,63 @@
+digraph RemoveComments {
+    rankdir=LR;
+    node [shape=circle];
+  
+
+    // Estados
+    N       [label="     N     "];
+    SE      [label="  SE  "];
+    LC      [label="  LC  "];
+    BC      [label="  BC  "];
+    BCS     [label="  BCS  "];
+    STR     [label="  STR  "];
+    CHR     [label="  CHR  "];
+    ESC_STR [label=" ESC_STR "];
+    ESC_CHR [label=" ESC_CHR "];
+
+    // Estado inicial
+    N [peripheries=2];
+
+    // N
+    N  -> SE  [label=" '/'  / ε"];
+    N  -> STR [label="\" / c"]; 
+    N  -> CHR [label="' / c"];
+    N  -> N   [label=" Σ - {/,\",'} / c"];
+
+    // SE
+    SE -> LC  [label="'/' / ε"];
+    SE -> BC  [label="* / ε"];
+    SE -> N   [label=" Σ - {/,*,\",'} / Z "];
+    SE -> STR  [label="\" / Z"];
+    SE -> CHR  [label=" ' / Z "];
+
+    // LC
+    LC -> N   [label="\\n / E"];
+    LC -> LC  [label="Σ - {\\n} / ε"];
+
+    // BC
+    BC  -> BCS [label="* / ε"];
+    BC  -> BC  [label="Σ - {*} / ε"];
+
+    // BCS
+    BCS -> N   [label=" '/' / ESP"];
+    BCS -> BCS [label="* / ε"];
+    BCS -> BC  [label="Σ -{*,/} / ε"];
+
+    // STR
+    STR -> ESC_STR [label=" '\\'  / c"];
+    STR -> N       [label="\" / c"];
+    STR -> STR     [label="Σ - {\",\\} / c"];
+    
+    CHR -> ESC_CHR [label=" '\\' / c"];
+    CHR -> N       [label="' / c"];
+    CHR -> CHR     [label=" Σ - {\',\\} / c"];
+
+    // ESC_STR
+    ESC_STR -> STR [label="Σ / c"];
+   
+
+    // ESC_CHR
+    ESC_CHR -> CHR [label=" Σ / c"];
+
+    LEGEND [shape=note, label=" Σ = ASCII \n c = escribir carácter leído\n ε = no escribir nada\n ESP = escribir espacio\n Z = escribir / + c\n E = ESP + c"];
+}

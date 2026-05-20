@@ -1,0 +1,49 @@
+digraph scanner_automate_finite{
+    //Estetica
+	fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"]
+	edge [fontname="Helvetica,Arial,sans-serif"]
+	rankdir=LR;
+	node [shape = circle];
+	graph [ranksep=2 ];
+	{rank = source; LEGEND}
+	
+	//Estado inicial
+	IS [label = "INIT -"];
+	//Estados Finales
+	ERR [label = " ERR + "];
+	NUM [label = "NUM +"];
+	ID [label = "   ID +  "];
+	INID [label = "   INID    "];
+	INNUM [label = "  INNUM "];
+	INLPA [label = "INLPA "];
+	RPA [label = "RPA +"];
+	LBR [label = "LBR +"];
+	LPA [label = "LPA +"]
+	RBR [label = "RBR +"];
+	PUN [label = "PUN +"];
+	PTR [label = "PTR +"];
+	INV [label = "INV +"];
+	
+
+	//Transiciones
+    IS -> INLPA [label = " ( "];
+    IS -> RPA [label = " ) "];
+    IS -> LBR [label = " [ "];
+    IS -> RBR [label = " ] "];
+    IS -> PTR [label = " * "];
+    INLPA -> INV [label = " ) "];
+    INLPA -> LPA [label = "  c - { ) } "] 
+    INID -> INID [label = "L,_, D"];
+    INID -> ID [label = " z "];
+    IS -> ERR [label = " x "];
+    IS -> IS [label = "WSPACE"];
+	IS -> INID [label = "L , _  "];
+    IS -> INNUM [label = " D "];
+    INNUM -> INNUM [label = " D "];
+    INNUM -> NUM [label = " n    " ];
+	IS -> PUN[label = " ; "];
+	
+	//Especificaciones 
+	LEGEND [shape = note, label = " L = [a,b,c,...,z] , [A,B,C,..Z], D = digito [0-9] ,\n x = caracter invalido/no especificado, \n       z = cualquier caracter invalido para token identificador\n     n = cualquier caracter invalido para el token literal numerico \n c = caracter e Σi"];
+}

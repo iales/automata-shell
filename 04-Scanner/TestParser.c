@@ -1,0 +1,16 @@
+char *x()
+float **f()
+int *p[20]
+int (*p)[20]
+int a
+float *fun()
+float (*fun)()
+int ((*fun)())[42]
+int (*pfa[20])()
+char **argv
+int (*daytab)[13]
+int *daytab[13]
+void *comp()
+void (*comp)()
+char (*(*x())[])()
+char (*(*x[3])())[5]
